@@ -3,7 +3,7 @@ import React, {FC} from "react";
 interface ButtonResetProp {
   setArrayField: (arrayField: string[]) => void;
   setActiveFigure: (activeFigure: string) => void;
-  setGameOver: (value: boolean) => void;
+  setGameOver: (flag: boolean) => void;
 }
 
 export const ButtonReset: FC<ButtonResetProp> = (props) => {

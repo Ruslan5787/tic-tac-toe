@@ -13,7 +13,6 @@ interface SmallFieldProps {
   activeFigure: string;
   setActiveFigure: (figure: string) => void;
   figureForThisField: string;
-  isGameOver: boolean;
 }
 
 export const SmallField: FC<SmallFieldProps> = (props) => {
@@ -24,7 +23,6 @@ export const SmallField: FC<SmallFieldProps> = (props) => {
     activeFigure,
     setActiveFigure,
     figureForThisField,
-    isGameOver,
   } = props;
 
   const [isFieldFilled, setFieldFilled] = useState<boolean>(false);
@@ -35,15 +33,7 @@ export const SmallField: FC<SmallFieldProps> = (props) => {
     arrayFieldCopy[fieldIndex] = activeFigure;
     setArrayField(arrayFieldCopy);
     toggleActiveFigure(setActiveFigure, activeFigure);
-
-    setFieldFilled(true);
   };
-
-  useEffect(() => {
-    if (isGameOver) {
-      setFieldFilled(false);
-    }
-  }, [isGameOver]);
 
   const getActiveFigure = (figure: string) => {
     if (figure === "X") {
@@ -54,6 +44,14 @@ export const SmallField: FC<SmallFieldProps> = (props) => {
       return null;
     }
   };
+
+  useEffect(() => {
+    if (ref.current?.innerHTML) {
+      setFieldFilled(true);
+    } else {
+      setFieldFilled(false);
+    }
+  }, [activeFigure]);
 
   return (
     <div
