@@ -1,19 +1,23 @@
-import React, { FC, memo } from "react";
+import React, {FC, memo} from "react";
+import {getInfoText} from "../helpers";
 
 interface GameInfoProps {
   activeFigure: string;
+  isGameOver: boolean;
 }
 
 export const GameInfo: FC<GameInfoProps> = memo((props) => {
-  const { activeFigure } = props;
-
-  const getInfoText = () => {
-    return activeFigure === "X" ? "крестики" : "нолики";
-  };
+  const {activeFigure, isGameOver} = props;
 
   return (
-    <span className="game-info">
-      <>Сейчас ходят {getInfoText()}</>
-    </span>
+    <div className="game-info">
+      {isGameOver ? (
+        <span className="game-over__notification">Игра окончена</span>
+      ) : (
+        <span>
+          Сейчас ходят <b>{getInfoText(activeFigure)}</b>
+        </span>
+      )}
+    </div>
   );
 });

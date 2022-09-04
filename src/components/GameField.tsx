@@ -1,48 +1,59 @@
-import { Row } from "./Row";
-import React, { FC } from "react";
+import React, {FC, useEffect} from "react";
+
+import classNames from "classnames";
+
+import {SmallField} from "./SmallField";
 
 interface GameFieldProps {
-  arrayField: string[][];
+  arrayField: string[];
+  setArrayField: (newArray: string[]) => void;
   activeFigure: string;
   setActiveFigure: (figure: string) => void;
-  setArrayField: (newArray: string[][]) => void;
+  isGameOver: boolean;
+  setGameOver: (flag: boolean) => void;
 }
 
 export const GameField: FC<GameFieldProps> = (props) => {
-  const { activeFigure, setActiveFigure, arrayField, setArrayField } = props;
+  const {
+    arrayField,
+    setArrayField,
+    activeFigure,
+    setActiveFigure,
+    isGameOver,
+    setGameOver,
+  } = props;
 
-  const toggleActiveGameFigure = (orderRow: number, orderBlock: number) => {
-    if (activeFigure === "X") {
-      setActiveFigure("0");
-    } else {
-      setActiveFigure("X");
+  useEffect(() => {
+    areAllFieldsFilled();
+  }, [arrayField]);
+
+  const areAllFieldsFilled = () => {
+    let counter = arrayField.length;
+
+    arrayField.forEach((figure) => {
+      if (figure) {
+        counter--;
+      }
+    });
+
+    if (counter === 0) {
+      setGameOver(true);
     }
-
-    arrayField[orderRow][orderBlock] = activeFigure;
-    setArrayField(arrayField);
   };
 
   return (
-    <div className="field">
-      <div className="field__wrapper">
-        <Row
-          orderRow={0}
-          row={arrayField[0]}
-          toggleActiveGameFigure={toggleActiveGameFigure}
+    <div className={classNames("field", {"block-click": isGameOver})}>
+      {arrayField.map((field, index) => (
+        <SmallField
+          key={index}
+          fieldIndex={index}
+          arrayField={arrayField}
+          setArrayField={setArrayField}
+          activeFigure={activeFigure}
+          setActiveFigure={setActiveFigure}
+          figureForThisField={arrayField[index]}
         />
-
-        <Row
-          orderRow={1}
-          row={arrayField[1]}
-          toggleActiveGameFigure={toggleActiveGameFigure}
-        />
-
-        <Row
-          orderRow={2}
-          row={arrayField[2]}
-          toggleActiveGameFigure={toggleActiveGameFigure}
-        />
-      </div>
+      ))}
     </div>
   );
 };
