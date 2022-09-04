@@ -2,9 +2,8 @@ import React, {FC, useEffect, useState} from "react";
 
 import "./styles/style.scss";
 
-import {calculateWinner} from "./helpers";
+import {calculateWinner, getModal} from "./helpers";
 
-import {WinModal} from "./components/WinModal";
 import {GameInfo} from "./components/GameInfo";
 import {GameField} from "./components/GameField";
 import {ButtonReset} from "./components/ButtonReset";
@@ -24,7 +23,7 @@ export const App: FC = () => {
   return (
     <div className="content">
       <div className="content__wrapper">
-        {winner && <WinModal/>}
+        {getModal(winner, isGameOver)}
 
         <ButtonReset
           setArrayField={setArrayField}

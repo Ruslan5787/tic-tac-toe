@@ -1,3 +1,6 @@
+import {Modal} from "./components/Modal";
+import React from "react";
+
 export function calculateWinner(fields: any) {
   const lines = [
     [0, 1, 2],
@@ -21,7 +24,7 @@ export function calculateWinner(fields: any) {
   return null;
 }
 
-export const getInfoText = (figure: string) => {
+export const getInfoText = (figure?: string | null) => {
   return figure === "X" ? "крестики" : "нолики";
 };
 
@@ -36,4 +39,22 @@ export const toggleActiveFigure = (
   }
 
   return null;
+};
+
+export const getModal = (winner: string | null, isGameOver: boolean) => {
+  if (winner) {
+    return (
+      <Modal>
+        <span>Победили </span>
+        <br/>
+        <b>{getInfoText(winner)}</b>!
+      </Modal>
+    );
+  } else if (winner === null && isGameOver) {
+    return (
+      <Modal>
+        <b>Ничья</b>
+      </Modal>
+    );
+  }
 };

@@ -52,6 +52,7 @@ export const GameField: FC<GameFieldProps> = (props) => {
           activeFigure={activeFigure}
           setActiveFigure={setActiveFigure}
           figureForThisField={arrayField[index]}
+          isGameOver={isGameOver}
         />
       ))}
     </div>
